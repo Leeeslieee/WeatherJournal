@@ -22,7 +22,7 @@ function submitData(event) {
                 //Get Feelings of entry
                 const feelings = document.getElementById('feelings').value;
 
-                postData('/post', { temp: data, date: dt, userInput: feelings })
+                postData('/post', {city:data.name, temp: data.main.temp, date: dt, userInput: feelings })
                 updateUI();
             });
 
@@ -39,7 +39,7 @@ const fetchData = async (baseURL, zipCode, apiKey) => {
     try {
         let newData = await res.json();
 
-        return newData.main.temp;
+        return newData;
     } catch (error) {
         console.log('Error: ', error);
     }
@@ -86,11 +86,12 @@ const updateUI = async () => {
 
     try {
         const allData = await request.json()
-
-        //Update User Interface
-        document.getElementById('date').textContent = allData[0].date;
-        document.getElementById('temp').textContent = allData[0].temp;
-        document.getElementById('content').textContent = allData[0].userInput;
+   
+        //Update User Interface with last entry in array
+        document.getElementById('city').textContent = allData.slice(-1)[0].city;
+        document.getElementById('date').textContent = allData.slice(-1)[0].date;
+        document.getElementById('temp').textContent = allData.slice(-1)[0].temp;
+        document.getElementById('content').textContent = allData.slice(-1)[0].userInput;
 
         //Clear input field after submit
         zipCode.value = '';

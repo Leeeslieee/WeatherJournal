@@ -38,6 +38,7 @@ const projectData =[]
 function postData(req,res){ 
     let newData = req.body;
     let newEntry={
+        city: newData.city,
         temp: newData.temp,
         date: newData.date,
         userInput: newData.userInput
