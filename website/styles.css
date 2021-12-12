@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200;400;600&family=Montserrat:ital,wght@0,300;0,400;0,700;1,300&family=Nunito:wght@300;400;800&family=Open+Sans&display=swap');
+
+
+* {
+    font-family: Dosis, Verdana; 
+}
+
+div{
+    margin: 0 35%; 
+}
+
+.header{
+    height: 100px;
+    margin-bottom: 50px;
+
+    /*header image*/
+    background-image: url(img/cloudandsun.png);
+    background-size: contain;
+    background-repeat: no-repeat;  
+
+    /*header text styling*/
+    font-size: 3em;
+    font-weight: 600;
+    text-align: center;
+}
+
+#zipAlert{
+    background-color: rgb(255, 213, 213);
+    border: 1px solid rgb(151, 4, 4);
+    border-radius: 5px; 
+    color: rgb(151, 4, 4);
+    width: 50%;
+}
+
+
+
+#feelings{
+    width: 100%; 
+}
+
+#entryHolder{
+    margin-top: 100px;
+    padding: 10px 10px;
+    display: grid;
+    grid-template-columns: 30% 70%;
+
+    border: 1px solid grey;
+    border-radius: 5px;
+}
