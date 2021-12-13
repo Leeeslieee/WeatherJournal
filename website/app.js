@@ -1,6 +1,6 @@
 // Personal API Key for OpenWeatherMap API
 const apiKey = '&appid=c661dd2afbc8be8cdf37250b5d339fa3&units=imperial';
-const baseURL = 'api.openweathermap.org/data/2.5/weather?zip=';
+const baseURL = 'https://api.openweathermap.org/data/2.5/weather?zip=';
 
 //Set up alert to make sure data is entered
 const zipAlert = document.getElementById('zipAlert')
@@ -18,12 +18,16 @@ function submitData(event) {
             .then(function (data) {
                 //Get Date of entry
                 const d = new Date();
-                const dt = d.getFullYear() + '/' + d.getMonth() + '/' + d.getDate();
+                const dt = d.getFullYear() + '/' + (d.getMonth()+1) + '/' + d.getDate();
                 //Get Feelings of entry
                 const feelings = document.getElementById('feelings').value;
+                if (data.cod!== '404') {
+                    postData('/post', { city: data.name, temp: data.main.temp, date: dt, userInput: feelings })
+                    updateUI();
+                }else{
+                    alert('Zip code is invalid');
+                }
 
-                postData('/post', {city:data.name, temp: data.main.temp, date: dt, userInput: feelings })
-                updateUI();
             });
 
     } else {
@@ -34,12 +38,12 @@ function submitData(event) {
 
 /* Fetch data via API*/
 const fetchData = async (baseURL, zipCode, apiKey) => {
-    const res = await fetch('https://' + baseURL + zipCode + apiKey)
+    const res = await fetch( baseURL + zipCode + apiKey)
 
     try {
         let newData = await res.json();
-
         return newData;
+
     } catch (error) {
         console.log('Error: ', error);
     }
@@ -86,12 +90,12 @@ const updateUI = async () => {
 
     try {
         const allData = await request.json()
-   
+
         //Update User Interface with last entry in array
-        document.getElementById('city').textContent = allData.slice(-1)[0].city;
-        document.getElementById('date').textContent = allData.slice(-1)[0].date;
-        document.getElementById('temp').textContent = allData.slice(-1)[0].temp;
-        document.getElementById('content').textContent = allData.slice(-1)[0].userInput;
+        document.getElementById('city').innerHTML = allData.city;
+        document.getElementById('date').innerHTML = allData.date;
+        document.getElementById('temp').innerHTML = allData.temp + 'F';
+        document.getElementById('content').innerHTML = allData.userInput;
 
         //Clear input field after submit
         zipCode.value = '';

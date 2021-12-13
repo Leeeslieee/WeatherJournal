@@ -33,17 +33,21 @@ function getData(req, res){
 }
 
 // Post Route
-const projectData =[]
+const projectData ={}
 
 function postData(req,res){ 
     let newData = req.body;
-    let newEntry={
+    /*let newEntry={
         city: newData.city,
         temp: newData.temp,
         date: newData.date,
         userInput: newData.userInput
-    }
-    projectData.push(newData);
+    }*/
+    //projectData.push(newData);
+    projectData['city']=newData.city;
+    projectData['temp']=newData.temp;
+    projectData['date']=newData.date;
+    projectData['userInput']=newData.userInput;
     console.log(projectData);
     res.send(projectData);
 }
